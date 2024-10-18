@@ -1,5 +1,5 @@
 from . import db
-from .ser import User
+from .User import User
 from sqlalchemy.dialects.postgresql import ARRAY
 
 class Volunteer(User):
