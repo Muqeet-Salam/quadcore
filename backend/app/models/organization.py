@@ -13,7 +13,8 @@ class Organization(User):
     verification_status = db.Column(db.String(20))
     cause_categories = db.Column(ARRAY(db.String(50)))
     notification_preferences = db.Column(db.JSON)
-
+    # add contact mail
+    
     __mapper_args__ = {
         'polymorphic_identity': 'organization',
     }

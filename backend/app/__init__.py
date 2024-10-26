@@ -1,27 +1,28 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_login import LoginManager
+from config import Config
+from flask_cors import CORS
 
 db = SQLAlchemy()
 migrate = Migrate()
-login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.Config')
+    app.config.from_object(Config)
 
     db.init_app(app)
     migrate.init_app(app, db)
-    login_manager.init_app(app)
+
+    CORS(app, resources={r"/api/*": {"origins": "https://quad-conquerors.vercel.app/"}})
 
     with app.app_context():
-        from .routes import auth
+        from .models import volunteer  # Import models
+        from .routes import auth, main_routes  # Import routes
         app.register_blueprint(auth.auth)
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        from .models.User import User
-        return User.query.get(int(user_id))
+        app.register_blueprint(main_routes.bp)
 
     return app
+
+# Make sure to export db here
+from app import db

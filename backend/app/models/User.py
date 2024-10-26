@@ -22,3 +22,18 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'<User {self.email}>'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'role': self.role,
+            'phone_number': self.phone_number,
+            'profile_picture': self.profile_picture,
+            'city': self.city,
+            'country': self.country,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            # Add other fields as needed
+        }

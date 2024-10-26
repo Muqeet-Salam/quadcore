@@ -1,5 +1,6 @@
 from . import db
 from datetime import datetime
+from sqlalchemy.orm import relationship
 
 class VolunteerMatch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,8 +15,8 @@ class VolunteerMatch(db.Model):
     organization_rating = db.Column(db.Float)
 
     # Relationships
-    volunteer = db.relationship('Volunteer', backref='matches')
-    opportunity = db.relationship('Opportunity', backref='matches')
+    volunteer = relationship("Volunteer", back_populates="ratings_received")
+    opportunity = relationship("Opportunity", back_populates="matches")
 
     def __repr__(self):
         return f'<VolunteerMatch {self.volunteer_id} - {self.opportunity_id}>'
