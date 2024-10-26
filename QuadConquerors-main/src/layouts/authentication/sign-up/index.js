@@ -17,7 +17,7 @@
 */
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 // @mui material components
@@ -54,7 +54,7 @@ function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ function SignIn() {
       // Assuming the API returns user data
       localStorage.setItem("user", JSON.stringify(response.data.user));
       // Redirect to dashboard or home page
-      navigate("/dashboard");
+      history.push("/dashboard");
     } catch (err) {
       setError("Invalid credentials. Please try again.");
     }
